@@ -10,19 +10,31 @@ Render está detectando automáticamente que debería usar Docker en lugar de No
 
 ## ✅ **SOLUCIÓN APLICADA:**
 
-### 1. **Forzar Node.js Buildpack**
+### 1. **ELIMINAR Dockerfile problemático** ⭐ CLAVE
+```bash
+# El Dockerfile en web/ estaba causando el conflicto
+rm web/Dockerfile
+```
+
+### 2. **Forzar Node.js Buildpack**
 Agregamos `.render-buildpacks.rc`:
 ```
 nodejs
 ```
 
-### 2. **Actualizar render.yaml**
+### 3. **Agregar runtime.txt**
+```
+nodejs-18.x
+```
+
+### 4. **Actualizar render.yaml**
 ```yaml
 services:
   - type: web
     name: gandolfo-main
     runtime: node  # ← Fuerza Node.js
     env: node      # ← Fuerza Node.js
+    autoDeploy: true
     buildCommand: npm install && npm run build
     startCommand: npm start
 ```
