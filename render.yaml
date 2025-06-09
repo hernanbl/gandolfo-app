@@ -1,0 +1,33 @@
+services:
+  # Servicio principal - App main en la raíz
+  - type: web
+    name: gandolfo-main
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    
+  # Servicio web - App web desde subtree
+  - type: web
+    name: gandolfo-web
+    env: node
+    region: oregon
+    plan: free
+    rootDir: ./web
+    buildCommand: cd web && npm install && npm run build
+    startCommand: cd web && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10001
+      - key: BASE_PATH
+        value: /web
