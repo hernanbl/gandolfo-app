@@ -2,10 +2,11 @@ services:
   # Servicio principal - App main en la raíz
   - type: web
     name: gandolfo-main
+    runtime: node
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
