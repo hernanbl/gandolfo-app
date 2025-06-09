@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: gandolfo-web
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    # Agregar variables de entorno sensibles desde el dashboard de Render:
+    # - SENDGRID_API_KEY
+    # - FROM_EMAIL
+    # - VITE_WHATSAPP_NUMBER
